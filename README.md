@@ -1,1 +1,2 @@
-# This is the backend for an AIRBNB clone
+# BE
+This is the backend service for a vacation rental app
