@@ -1,1 +1,1 @@
-export { default as authModel } from './auth.model';
+export { default as authModel } from './authModel';

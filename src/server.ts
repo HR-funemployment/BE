@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express, { Application } from 'express';
 import cors from 'cors';
 import routes from './routes';
+import mongoConnect from './database/mongo';
 import logger from './middleware/logger';
 import morgan from './middleware/morgan';
 
@@ -10,6 +11,9 @@ import morgan from './middleware/morgan';
 dotenv.config();
 const app: Application = express();
 const port = process.env.Port || 8080;
+
+//  ====== Database =========
+mongoConnect();
 
 //  ====== Middleware =========
 app.use(express.json());
