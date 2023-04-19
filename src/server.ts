@@ -1,7 +1,7 @@
 //  ====== Imports ============
 import dotenv from 'dotenv';
 import express, { Application } from 'express';
-import { createServer } from 'http';
+// import { createServer } from 'http';
 import cors from 'cors';
 import routes from './routes';
 import createSocketServer from './sockets/socket';
@@ -21,9 +21,14 @@ app.use(morgan);
 app.use('/', routes());
 
 //  ====== Socket server =========
-const server = createServer(app);
-createSocketServer(server);
+const server = app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+})
 
-server.listen(port, () => {
-  logger.info(`Server is running at port ${port}`);
-});
+createSocketServer(server)
+// const server = createServer(app);
+// createSocketServer(server);
+
+// server.listen(port, () => {
+//   logger.info(`Server is running at port ${port}`);
+// });
