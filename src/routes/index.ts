@@ -1,9 +1,12 @@
 import express from 'express';
-import authRoutes from './auth';
+import userRoutes from './users';
+import listingRoutes from './listings';
 
 const router = express.Router();
 
-router.use('/auth', authRoutes);
+// main paths
+router.use('/hosts', userRoutes);
+router.use('/listings', listingRoutes);
 
 export default function getRouter() {
   return router;
