@@ -1,23 +1,38 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
-import { Server as HTTPServer } from 'http';
+import { Application } from 'express'
 import logger from '../middleware/logger';
 
-export default function createSocketServer(httpServer: HTTPServer): SocketIOServer {
+
+export default function createSocketServer(expressServer: ReturnType<Application['listen']>): SocketIOServer {
   const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: '*',
     methods: ['GET', 'POST'],
   };
 
-  const io = new SocketIOServer(httpServer, {
+  const io = new SocketIOServer(expressServer, {
     cors: corsOptions,
   });
 
+  io.use((socket: any, next) => {
+    const customId = socket.handshake.query.customId as string;
+    if (!customId) {
+      return next(new Error('Custom ID is missing'));
+    }
+    socket.id = customId;
+    next();
+  });
+
   io.on('connection', (socket: Socket) => {
-    logger.info('A user connected');
+    logger.info(`Client connected with custom ID: ${socket.id}`);
 
     socket.on('send-message', (message: string) => {
       logger.info('Message received:', message);
-      io.emit('message', message);
+      const MessageDetail = {
+        id: socket.id,
+        text: message,
+        created: new Date()
+      }
+      io.emit('message', MessageDetail);
     });
 
     socket.on('disconnect', () => {
