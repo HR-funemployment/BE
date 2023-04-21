@@ -17,11 +17,11 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan);
 
-app.use('/', routes());
+app.use('/api', routes());
 
 //  ====== Socket server =========
 const server = app.listen(port, () => {
   logger.info(`Server listening on port ${port}`);
-})
+});
 
-createSocketServer(server)
+createSocketServer(server);
