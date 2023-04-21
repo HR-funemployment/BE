@@ -2,7 +2,7 @@
 CREATE TABLE listing_drafts (
   id SERIAL PRIMARY KEY,
   user_id INTEGER NOT NULL,
-  host_id INTEGER REFERENCES hosts(id),
+  host_id INTEGER REFERENCES hosts(host_id),
   structure_type TEXT NOT NULL,
   room_type TEXT,
   -- entire/private/shared in structure -> connected with structure_type
@@ -45,7 +45,9 @@ CREATE TABLE listing_drafts (
   allows_any_guests BOOLEAN,
   price NUMERIC(7, 2),
   offering_discounts BOOLEAN,
-  legal_inclusions jsonb [],
+  security_cameras BOOLEAN,
+  weapons BOOLEAN,
+  dangerous_animals BOOLEAN
 );
 
-CREATE INDEX idx_user_id ON listing_drafts(user_id);
+--  psql -U davidzhang -d airbnb -a -f listing_drafts.sql

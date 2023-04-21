@@ -17,7 +17,7 @@ CREATE TABLE hosts (
   host_total_listings_count INTEGER,
   host_verifications TEXT [],
   host_has_profile_pic BOOLEAN,
-  host_identity_verified BOOLEAN,
+  host_identity_verified BOOLEAN
 );
 
-CREATE INDEX idx_user_id ON hosts(user_id);
+--  psql -U davidzhang -d airbnb -a -f hosts.sql
